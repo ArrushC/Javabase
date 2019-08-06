@@ -1,0 +1,11 @@
+\.idea/
+\.idea/dictionaries
+\target/
+*.iml
+
+.idea/workspace.xml
+.idea/compiler.xml
+.idea/misc.xml
+.idea/vcs.xml
+.idea/uiDesigner.xml
+.idea/dictionaries/Arrush.xml
