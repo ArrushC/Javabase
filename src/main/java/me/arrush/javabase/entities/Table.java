@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("WeakerAccess")
-public final class Table extends DatabaseEntity {
+public class Table extends DatabaseEntity {
     private final Database database;
     private final String name;
     private final List<Column> columns;
@@ -40,9 +40,6 @@ public final class Table extends DatabaseEntity {
     public String getName() { return this.name; }
     public Database getDatabase() { return this.database; }
     public List<Column> getColumns() { return this.columns; }
-
-    // CHANGE THE withStatement PARAMETER FROM SQLStatmenet TO STRING. SOMEHOW.
-    // PERHAPS DO THIS VIA DATABASE TYPE AND THEN INSTANTIATE A SPECIFIC STATEMENT.
 
     public Query<Table> create() {
         return this.openTableQuery(StatementType.CREATE_TABLE)

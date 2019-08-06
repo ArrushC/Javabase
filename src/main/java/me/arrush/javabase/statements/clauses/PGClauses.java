@@ -73,31 +73,22 @@ public enum  PGClauses implements IClause {
 
     @Override
     public int getPosition() { return this.position; }
-
     @Override
     public Pair<Integer, String> getPair() {
         return new Pair<>(this.position, this.clause);
     }
-
     @Override
     public String getClause() { return this.clause; }
-
     @Override
     public DatabaseType getDatabaseType() {
         return DatabaseType.POSTGRESQL;
     }
-
     @Override
     public boolean canJoin() { return this.canJoin;}
-
     @Override
     public boolean isOptional() { return this.isOptional; }
-
     @Override
     public boolean isJoined() { return this.isJoined; }
-
     @Override
     public StatementType[] getTypes() { return this.type; }
-
-
 }

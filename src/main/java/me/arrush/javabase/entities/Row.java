@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * database.
  */
 @SuppressWarnings({"WeakerAccess", "UnusedReturnValue"})
-public final class Row extends DatabaseEntity {
+public class Row extends DatabaseEntity {
     /**
      * The table is stored so that when needed, it can
      * be used to perform a query.
