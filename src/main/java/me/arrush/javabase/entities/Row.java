@@ -25,7 +25,7 @@ public class Row extends DatabaseEntity {
      * It is used in {@link Row#update(List) Row#Update(List)}
      * so updating values is easier.
      */
-    private final Table table;
+    protected final Table table;
     /**
      * Stores data which makes it resemble a record, full
      * of data.
@@ -34,7 +34,7 @@ public class Row extends DatabaseEntity {
      * class because it allows programmers to store, update
      * or delete a record by using this class.
      */
-    private List<Value<?>> values;
+    protected List<Value<?>> values;
     /**
      * Instantiates the Row class as a new object.
      *

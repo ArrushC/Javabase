@@ -14,6 +14,7 @@ public enum DataType {
     SMALLINT("SMALLINT", DataTypeCollection.NUMERIC),
     INTEGER("INT", DataTypeCollection.NUMERIC),
     SERIAL("SERIAL", DataTypeCollection.NUMERIC),
+    BIGINT("BIGINT", DataTypeCollection.NUMERIC),
 
     // Floating-point Number data types
     FLOAT("FLOAT(%s)", DataTypeCollection.DECIMAL),

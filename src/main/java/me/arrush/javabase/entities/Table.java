@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("WeakerAccess")
 public class Table extends DatabaseEntity {
-    private final Database database;
-    private final String name;
-    private final List<Column> columns;
+    protected final Database database;
+    protected final String name;
+    protected final List<Column> columns;
 
     /**
      * Instantiates the {@link Table Table} class.
