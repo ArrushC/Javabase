@@ -52,7 +52,7 @@ public final class Query<T extends DatabaseEntity> {
 
     public Query<T> withStatement(Statement statement) {
         if (!statement.getType().equals(this.type)) throw new IllegalArgumentException("Statement Type must be the same!");
-        this.statement = statement.toFullString();
+        this.statement = statement.toString();
         return this;
     }
 

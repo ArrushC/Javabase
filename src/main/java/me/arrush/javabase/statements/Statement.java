@@ -1,22 +1,12 @@
 package me.arrush.javabase.statements;
 
-import javafx.util.Pair;
-import me.arrush.javabase.statements.clauses.IClause;
-
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 @SuppressWarnings({"WeakerAccess", "FieldCanBeLocal"})
 public final class Statement {
-    private StatementType type;
-    private final List<IClause> clauses;
+    private final StatementType type;
     private String DROP_DATABASE, CREATE_TABLE, DROP_TABLE, DELETE_ROW, SELECT, INSERT, UPDATE;
 
-    Statement(StatementType type, List<IClause> clauses) {
+    Statement(StatementType type) {
         this.type = type;
-        this.clauses = clauses;
 
         this.DROP_DATABASE =  "DROP DATABASE IF EXISTS %s";
         this.CREATE_TABLE =  "CREATE TABLE IF NOT EXISTS %s (%s)";
@@ -27,12 +17,8 @@ public final class Statement {
         this.DELETE_ROW =  "DELETE FROM %s WHERE %s";
     }
 
-    Statement(List<IClause> clauses) {
-        this(null, clauses);
-    }
-
-    public String getStatement(StatementType type) {
-        switch (type) {
+    public String getStatement() {
+        switch (this.type) {
             case INSERT: return this.INSERT;
             case SELECT: return this.SELECT;
             case UPDATE: return this.UPDATE;
@@ -48,11 +34,6 @@ public final class Statement {
 
     @Override
     public String toString() {
-        return this.getStatement(this.type);
-    }
-
-    public String toFullString() {
-        return Stream.concat(this.clauses.stream().map(IClause::getPair), Stream.of(new Pair<>(0, this.getStatement(this.type))))
-                .sorted(Comparator.comparingInt(Pair::getKey)).map(Pair::getValue).collect(Collectors.joining(" "));
+        return this.getStatement();
     }
 }

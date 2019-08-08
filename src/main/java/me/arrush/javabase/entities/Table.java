@@ -95,7 +95,7 @@ public class Table extends DatabaseEntity {
                     .create().doAndReturn();
         }
 
-        public Query<Table> buildAndCreat(Database database) {
+        public Query<Table> buildAndCreateQuery(Database database) {
             return new Table(database, this.name, this.columns).create();
         }
     }
