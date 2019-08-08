@@ -1,7 +1,8 @@
 package me.arrush.javabase.statements;
 
 public enum SimpleStatements {
-    CREATE_TABLE("CREATE TABLE IF NOT EXISTS %s (%s)"),
+    CREATE_TABLE_CONDITION("CREATE TABLE IF NOT EXISTS %s (%s)"),
+    CREATE_TABLE("CREATE TABLE %s (%s)"),
     DROP_TABLE("DROP TABLE IF EXISTS %s"),
     SELECT_FIELDS("SELECT %s FROM %s WHERE %s");
 
