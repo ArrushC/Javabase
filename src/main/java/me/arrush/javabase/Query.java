@@ -61,6 +61,11 @@ public final class Query<T extends DatabaseEntity> {
         return this;
     }
 
+    public Query<T> appendStatement(String statement) {
+        this.statement += statement;
+        return this;
+    }
+
     public Query<T> modifyStatement(Function<String, String> function) {
         this.statement = function.apply(this.statement);
         return this;
