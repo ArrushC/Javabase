@@ -197,6 +197,8 @@ public class Row extends DatabaseEntity {
 
     public int getInt(String column) { return (int) this.getObject(column); }
 
+    public long getLong(String column) { return (long) this.getObject(column);}
+
     public boolean getBoolean(String column) { return (boolean) this.getObject(column); }
 
 
