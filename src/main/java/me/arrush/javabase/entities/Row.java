@@ -189,9 +189,9 @@ public class Row extends DatabaseEntity {
         return this.table.insert(this).modifyStatement(s -> String.format(s, this.table.getName(), columns, values)).doAndReturn();
     }
 
-    public Object getObject(String column) {
-        return this.values.stream().filter(v -> v.getColumn().getName().equals(column)).map(Value::getValue).findFirst().orElse(null);
-    }
+    public Value<?> getValue(String column) { return this.values.stream().filter(v -> v.getColumn().getName().equals(column)).findFirst().orElse(null); }
+
+    public Object getObject(String column) { return this.getValue(column).getValue(); }
 
     public String getString(String column) { return (String) this.getObject(column); }
 
