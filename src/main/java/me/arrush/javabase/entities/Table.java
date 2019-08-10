@@ -6,6 +6,7 @@ import me.arrush.javabase.databases.Database;
 import me.arrush.javabase.statements.SimpleStatements;
 import me.arrush.javabase.statements.StatementType;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -48,6 +49,14 @@ public class Table extends DatabaseEntity {
     public Query<Table> drop() {
         return this.openTableQuery(StatementType.DROP_TABLE)
                 .withStatement(SimpleStatements.DROP_TABLE.format(this.name));
+    }
+
+    public boolean rowExists(String selectQuery) {
+        try {
+            return this.openRowQuery(StatementType.SELECT).withStatement(String.format("SELECT EXISTS(%s)", selectQuery)).fetchResult().next();
+        } catch (SQLException e) {
+            return false;
+        }
     }
 
     public Query<Row> insert() {return this.insert(null);}
