@@ -86,7 +86,6 @@ public final class Query<T extends DatabaseEntity> {
     public void queue() {this.queue(null, null);}
 
     public T doAndReturn(Consumer<T> success, Consumer<Throwable> error) {
-        System.out.println(this.statement);
         this.queue(success, error);
         return this.entity;
     }
@@ -117,9 +116,9 @@ public final class Query<T extends DatabaseEntity> {
     public Row fetch() {return this.fetch(null);}
     public List<Row> fetchMultiple(Consumer<Throwable> error) {
         try {
-            ResultSet rs = Objects.requireNonNull(this.fetchResult(error));
+            ResultSet rs = this.fetchResult(error);
             List<Row> rows = new ArrayList<>();
-            while (rs.next()) {
+            while (rs != null && rs.next()) {
                 rows.add(new Row((Table) this.entity, this.parseRow(rs)));
             }
             return rows;
