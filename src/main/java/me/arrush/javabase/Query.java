@@ -14,7 +14,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -107,8 +106,10 @@ public final class Query<T extends DatabaseEntity> {
 
     public Row fetch(Consumer<Throwable> error) {
         Row r = this.entity == null ? new Row(this.table) : (Row) this.entity;
-        try {
-            return r.modify(this.parseRow(Objects.requireNonNull(this.fetchResult(error))));
+        try (PreparedStatement statement = this.database.makePreparedStatement(this.statement)){
+            ResultSet rs = statement.executeQuery();
+            statement.close();
+            return r.modify(this.parseRow(rs));
         } catch (SQLException e) {
             if (error != null) error.accept(e); else e.printStackTrace();
             return null;
@@ -116,12 +117,13 @@ public final class Query<T extends DatabaseEntity> {
     }
     public Row fetch() {return this.fetch(null);}
     public List<Row> fetchMultiple(Consumer<Throwable> error) {
-        try {
-            ResultSet rs = this.fetchResult(error);
+        try (PreparedStatement statement = this.database.makePreparedStatement(this.statement)) {
+            ResultSet rs = statement.executeQuery();
             List<Row> rows = new ArrayList<>();
             while (rs != null && rs.next()) {
                 rows.add(new Row((Table) this.entity, this.parseRow(rs)));
             }
+            statement.close();
             return rows;
         } catch (SQLException e) {
             if (error != null) error.accept(e); else e.printStackTrace();
