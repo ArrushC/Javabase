@@ -7,7 +7,7 @@ public enum SimpleStatements {
     // MySQL specific statements goes down below.
 
     // Statements that are applicable in all databases goes down below.
-    CREATE_TABLE_CONDITION("CREATE TABLE IF NOT EXISTS %s (%s)"),
+    CREATE_TABLE_NOTEXISTS("CREATE TABLE IF NOT EXISTS %s (%s)"),
     CREATE_TABLE("CREATE TABLE %s (%s)"),
     DROP_TABLE("DROP TABLE IF EXISTS %s"),
     SELECT_FIELDS("SELECT %s FROM %s WHERE %s");

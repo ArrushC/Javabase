@@ -44,7 +44,7 @@ public class Table extends DatabaseEntity {
 
     public Query<Table> create() {
         return this.openTableQuery(StatementType.CREATE_TABLE)
-                .withStatement(SimpleStatements.CREATE_TABLE.format(this.name, this.columns.stream().map(Column::toString).collect(Collectors.joining(", "))));
+                .withStatement(SimpleStatements.CREATE_TABLE_NOTEXISTS.format(this.name, this.columns.stream().map(Column::toString).collect(Collectors.joining(", "))));
     }
     public Query<Table> drop() {
         return this.openTableQuery(StatementType.DROP_TABLE)
