@@ -110,6 +110,7 @@ public final class Query<T extends DatabaseEntity> {
         try {
             return r.modify(this.parseRow(Objects.requireNonNull(this.fetchResult(error))));
         } catch (SQLException e) {
+            if (error != null) error.accept(e); else e.printStackTrace();
             return null;
         }
     }
@@ -123,6 +124,7 @@ public final class Query<T extends DatabaseEntity> {
             }
             return rows;
         } catch (SQLException e) {
+            if (error != null) error.accept(e); else e.printStackTrace();
             return null;
         }
     }
