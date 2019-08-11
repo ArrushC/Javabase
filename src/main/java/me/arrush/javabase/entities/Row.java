@@ -4,7 +4,9 @@ import me.arrush.javabase.DatabaseEntity;
 import me.arrush.javabase.annotations.SQLColumn;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -100,7 +102,7 @@ public class Row extends DatabaseEntity {
      *                              name provided.
      */
     public void parse(Class<?> c) throws IllegalAccessException, NullPointerException {
-        for (Field f : c.getDeclaredFields()) {
+        for (Field f : Arrays.stream(c.getDeclaredFields()).filter(f -> !Modifier.isFinal(f.getModifiers())).collect(Collectors.toList())) {
             String columnName = f.getAnnotation(SQLColumn.class).column();
             Object value = Objects.requireNonNull(this.values.stream().filter(v -> v.getColumn().getName()
                     .equals(columnName)).findFirst().orElse(null));
