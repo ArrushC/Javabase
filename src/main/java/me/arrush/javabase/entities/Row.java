@@ -106,6 +106,7 @@ public class Row extends DatabaseEntity {
             String columnName = f.getAnnotation(SQLColumn.class).column();
             Object value = Objects.requireNonNull(this.values.stream().filter(v -> v.getColumn().getName()
                     .equals(columnName)).findFirst().orElse(null));
+            f.setAccessible(true);
             f.set(c, value);
         }
     }
