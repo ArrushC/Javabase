@@ -50,7 +50,7 @@ public enum DataType {
     public static DataType from(Object o) {
         if (o instanceof Boolean) return BOOLEAN;
         else if (o instanceof Integer) return INTEGER;
-        else if (o instanceof Long) return SERIAL;
+        else if (o instanceof Long) return BIGINT;
         else if (o instanceof Float) return FLOAT;
         else if (o instanceof String) return VARCHAR;
         // I would be appreciated if you can help me to add more instanceof checks here.
