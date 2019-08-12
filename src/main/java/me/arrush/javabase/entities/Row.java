@@ -104,8 +104,7 @@ public class Row extends DatabaseEntity {
     public void parse(Class<?> c) throws IllegalAccessException, NullPointerException {
         for (Field f : Arrays.stream(c.getDeclaredFields()).filter(f -> !Modifier.isFinal(f.getModifiers())).collect(Collectors.toList())) {
             String columnName = f.getAnnotation(SQLColumn.class).column();
-            Object value = Objects.requireNonNull(this.values.stream().filter(v -> v.getColumn().getName()
-                    .equals(columnName)).findFirst().orElse(null));
+            Object value = Objects.requireNonNull(this.values.stream().filter(v -> v.getColumn().getName().equals(columnName)).findFirst().orElse(null)).getValue();
             f.setAccessible(true);
             f.set(c, value);
         }
