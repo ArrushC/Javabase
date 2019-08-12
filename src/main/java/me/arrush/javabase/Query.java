@@ -120,7 +120,7 @@ public final class Query<T extends DatabaseEntity> {
         try (PreparedStatement statement = this.database.makePreparedStatement(this.statement)) {
             ResultSet rs = statement.executeQuery();
             List<Row> rows = new ArrayList<>();
-            while (rs != null && rs.next()) {
+            while (rs.next()) {
                 rows.add(new Row((Table) this.entity, this.parseRow(rs)));
             }
             statement.close();
