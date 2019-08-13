@@ -7,5 +7,6 @@ public enum StatementType {
     DELETE_ROW,
     DROP_TABLE,
     CREATE_TABLE,
-    DROP_DATABSE
+    DROP_DATABSE,
+    ANY
 }

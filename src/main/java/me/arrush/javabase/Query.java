@@ -45,13 +45,15 @@ public final class Query<T extends DatabaseEntity> {
     public Query(Database database, T entity, StatementType type) { this(database, entity, type, null); }
     public Query(Database database, StatementType type, String statement) { this(database, null, type, statement); }
     public Query(Database database, StatementType type) { this(database, null, type, null); }
+    public Query(Database database) {this(database, StatementType.ANY);}
     public Query(Table table, T entity, StatementType type, String statement) { this(table.getDatabase(), entity, type, statement); }
     public Query(Table table, T entity, StatementType type) { this(table, entity, type, null); }
     public Query(Table table, StatementType type, String statement) { this(table, null, type, statement); }
     public Query(Table table, StatementType type) { this(table, null, type); }
+    public Query(Table table) {this(table, StatementType.ANY);}
 
     public Query<T> withStatement(Statement statement) {
-        if (!statement.getType().equals(this.type)) throw new IllegalArgumentException("Statement Type must be the same!");
+        if (!statement.getType().equals(this.type) && !this.type.equals(StatementType.ANY)) throw new IllegalArgumentException("Statement Type must be the same!");
         this.statement = statement.toString();
         return this;
     }
