@@ -95,18 +95,18 @@ public class Row extends DatabaseEntity {
      * using the {@link me.arrush.javabase.annotations.SQLColumn SQLColumn}
      * annotation.
      *
-     * @param c The class
+     * @param instance The instance
      * @throws IllegalAccessException If the field with the annotation
      *                                has a restrictive access modifier.
      * @throws NullPointerException If there is no value for the column
      *                              name provided.
      */
-    public void parse(Class<?> c) throws IllegalAccessException, NullPointerException {
-        for (Field f : Arrays.stream(c.getDeclaredFields()).filter(f -> !Modifier.isFinal(f.getModifiers())).collect(Collectors.toList())) {
+    public <T> void parse(T instance) throws IllegalAccessException, NullPointerException {
+        for (Field f : Arrays.stream(instance.getClass().getDeclaredFields()).filter(f -> !Modifier.isFinal(f.getModifiers())).collect(Collectors.toList())) {
             String columnName = f.getAnnotation(SQLColumn.class).column();
             Object value = Objects.requireNonNull(this.values.stream().filter(v -> v.getColumn().getName().equals(columnName)).findFirst().orElse(null)).getValue();
             f.setAccessible(true);
-            f.set(c, value);
+            f.set(instance, value);
         }
     }
     /**
@@ -186,9 +186,8 @@ public class Row extends DatabaseEntity {
      * @return The {@link Row Row} instance.
      */
     public Row insert() {
-        String columns = this.values.stream().map(v -> v.getColumn().getName()).collect(Collectors.joining(","));
         String values = this.values.stream().map(Value::valueToString).collect(Collectors.joining(","));
-        return this.table.insert(this).modifyStatement(s -> String.format(s, this.table.getName(), columns, values)).doAndReturn();
+        return this.table.insert(this).withStatement(String.format("INSERT INTO %s VALUES (%s)", this.table.getName(),  values)).doAndReturn();
     }
 
     public Value<?> getValue(String column) { return this.values.stream().filter(v -> v.getColumn().getName().equals(column)).findFirst().orElse(null); }
