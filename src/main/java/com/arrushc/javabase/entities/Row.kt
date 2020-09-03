@@ -19,6 +19,7 @@ data class Row(val table: Table,
     fun insert(): Row? {
         if (!this.insertable) { throw IllegalAccessException("This row is meant to be modifiable and readable only!") }
         val cells = cells.joinToString(",") { it.getValueDisplay() }
+
         //return table.insert(this).withStatement(String.format("INSERT INTO %s VALUES (%s)", table.name, cells)).doAndReturn()
         return null
     }

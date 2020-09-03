@@ -34,30 +34,16 @@ class RowQuery(table: Table, statement: Statement): Query<Row>(table.database, t
         }
     }
 
-    /*
-    fun fetchRow(error: Consumer<Throwable?>?= null): Row? {
-        val row = Row(this.table)
-        try {
-            database.makePreparedStatement(this.statement.sqlStatement).use { statement ->
-                val rs = statement.executeQuery()
-                statement.close()
-                return Row(parseRow(rs))
-            }
-        } catch (e: SQLException) {
-            error?.accept(e) ?: e.printStackTrace()
-            return null
-        }
-    }
-     */
+    fun fetchRow(error: Consumer<Throwable?>?= null): Row? = parseRow(this.fetchResultSet(error)!!)
 
-    /*
-    fun fetchMultiple(error: Consumer<Throwable?>? = null): List<Row>? { // Must be in RowQueryFlood
+
+    fun fetchMultiple(error: Consumer<Throwable?>? = null): List<Row?>? { // Must be in RowQueryFlood
         try {
             database.makePreparedStatement(this.statement.sqlStatement).use { statement ->
                 val rs = statement.executeQuery()
-                val rows: MutableList<Row> = ArrayList()
+                val rows: MutableList<Row?> = ArrayList()
                 while (rs.next()) {
-                    rows.add(Row(entity as Table?, parseRow(rs)))
+                    rows.add(parseRow(rs))
                 }
                 statement.close()
                 return rows
@@ -67,9 +53,6 @@ class RowQuery(table: Table, statement: Statement): Query<Row>(table.database, t
             return null
         }
     }
-     */
-
-    // fun fetchMultiple(): List<Row>? = this.fetchMultiple(null)
 
     @Throws(SQLException::class)
     fun parseRow(rs: ResultSet): Row? {

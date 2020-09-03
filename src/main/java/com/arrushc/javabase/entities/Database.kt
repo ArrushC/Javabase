@@ -1,10 +1,8 @@
 package com.arrushc.javabase.entities
 
-import com.arrushc.javabase.datatype.Datatype
 import com.arrushc.javabase.entities.database.*
+import com.arrushc.javabase.utils.DatabaseUtils
 import com.zaxxer.hikari.HikariDataSource
-import org.apache.ddlutils.Platform
-import org.apache.ddlutils.PlatformFactory
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.SQLException
@@ -17,21 +15,7 @@ abstract class Database internal constructor(val name: String, val type: Databas
 
     init {
         Class.forName(className)
-        this.tables = this.getTables()
-    }
-
-    @JvmName("getTables1")
-    private fun getTables(): Set<Table> {
-        val platform: Platform = PlatformFactory.createNewPlatformInstance(dataSource)
-        val tables = mutableSetOf<Table>()
-        for (table in platform.readModelFromDatabase("model").tables) {
-            val columns : MutableSet<Column> = mutableSetOf()
-            for (column in table.columns) {
-                columns.add(Column(column.name, Datatype.from(column.type)!!))
-            }
-            tables.add(Table(this, table.name, columns))
-        }
-        return tables
+        this.tables = DatabaseUtils.formTableObjects(this)
     }
 
     @Throws(SQLException::class)
